@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-data class ExclusionItem (
+data class ExclusionItemRemote (
     @JsonProperty("facility_id")
     val facilityId: String,
 

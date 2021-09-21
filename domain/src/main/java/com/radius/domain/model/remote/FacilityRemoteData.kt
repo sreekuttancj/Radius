@@ -9,5 +9,5 @@ data class FacilityRemoteData (
     val facilitiesList: List<FacilityRemote>,
 
     @JsonProperty("exclusions")
-    val exclusionList: List<ExclusionList>
+    val exclusionListRemote: List<ExclusionListRemote>
     )
