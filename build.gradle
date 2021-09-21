@@ -2,7 +2,13 @@
 buildscript {
 
     ext{
-        hilt_version = "2.37"
+        kotlin_version = "1.5.10"
+        hilt_version = "2.38.1"
+        jackson_version = "2.12.3"
+        retrofit_version = "2.9.0"
+        okhttp_version = "4.9.1"
+        rxjava3_android_version = "3.0.0"
+        okhttpprofiler_version ="1.0.7"
     }
 
     repositories {
@@ -11,7 +17,8 @@ buildscript {
     }
     dependencies {
         classpath "com.android.tools.build:gradle:7.0.2"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.20"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
