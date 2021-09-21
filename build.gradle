@@ -9,21 +9,15 @@ buildscript {
         okhttp_version = "4.9.1"
         rxjava3_android_version = "3.0.0"
         okhttpprofiler_version ="1.0.7"
+        livedata_ktx_version = '2.3.1'
+        viemodel_ktx_version = '2.3.1'
+        navigation_component_version = "2.3.5"
+
     }
 
     repositories {
         google()
         mavenCentral()
-
-        maven {
-            url 'https://jitpack.io'
-        }
-        maven {
-            url "https://maven.google.com"
-        }
-        flatDir {
-            dirs 'libs'
-        }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:7.0.2"

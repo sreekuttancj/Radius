@@ -2,6 +2,8 @@ package com.radius.radius.di
 
 import com.itkacher.okhttpprofiler.OkHttpProfilerInterceptor
 import com.radius.domain.Constant
+import com.radius.domain.util.AppExecutionThread
+import com.radius.domain.util.ExecutionThread
 import com.radius.radius.BuildConfig
 import dagger.Module
 import dagger.Provides
@@ -98,4 +100,9 @@ class ApplicationModule {
     @Provides
     @Singleton
     fun providesAppBaseURL(): String = Constant.BASE_URL
+
+    @Provides
+    @Singleton
+    fun provideExecutorThreadService(imp: AppExecutionThread): ExecutionThread = imp
+
 }
