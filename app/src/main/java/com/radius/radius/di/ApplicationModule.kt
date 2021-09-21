@@ -1,6 +1,7 @@
 package com.radius.radius.di
 
 import com.itkacher.okhttpprofiler.OkHttpProfilerInterceptor
+import com.radius.domain.Constant
 import com.radius.radius.BuildConfig
 import dagger.Module
 import dagger.Provides
@@ -96,5 +97,5 @@ class ApplicationModule {
 
     @Provides
     @Singleton
-    fun providesAppBaseURL(): String = "https://my-json-server.typicode.com/iranjith4/ad-assignment/db"
+    fun providesAppBaseURL(): String = Constant.BASE_URL
 }
