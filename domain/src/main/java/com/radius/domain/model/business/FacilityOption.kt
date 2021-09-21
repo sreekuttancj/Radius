@@ -6,4 +6,8 @@ data class FacilityOption (
     val name: String,
 
     val icon: String,
+
+    val isSelected: Boolean = false,
+
+    val isExcluded: Boolean = false
     )
