@@ -8,15 +8,17 @@ import javax.inject.Inject
 class FacilityOptionMapper @Inject constructor() : BaseMapper<FacilityRemoteData, FacilityData> {
     override fun map(data: FacilityRemoteData?): FacilityData {
         data?.let {
-            val facilityOptions = mutableListOf<FacilityOption>()
             val facilities = mutableListOf<Facility>()
 
             it.facilitiesList?.forEach { facilityRemote ->
+                val facilityOptions = mutableListOf<FacilityOption>()
+
                 facilityRemote.options.forEach { optionRemote ->
+
                     val option = FacilityOption(
                         id = optionRemote.id,
                         name = optionRemote.name,
-                        icon = optionRemote.icon
+                        icon = if (optionRemote.icon == "no-room") "no_room" else optionRemote.icon
                     )
                     facilityOptions.add(option)
                 }
