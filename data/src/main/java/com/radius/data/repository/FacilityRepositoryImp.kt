@@ -1,5 +1,6 @@
 package com.radius.data.repository
 
+import android.util.Log
 import com.radius.data.mapper.FacilityOptionMapper
 import com.radius.domain.model.business.FacilityData
 import com.radius.domain.repository.FacilityRemoteDataSource
@@ -16,6 +17,7 @@ class FacilityRepositoryImp @Inject constructor(
         return Observable.concat(Observable.just(ExecutionResult.progress(true)),
             remoteDataSource.getFacilityInfo()
                 .map {
+                    Log.i("check_data","remote_data_source: facility_data: $it")
                     facilityOptionMapper.map(it)
                 }
                 .map {

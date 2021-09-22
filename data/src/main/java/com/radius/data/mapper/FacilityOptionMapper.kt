@@ -11,7 +11,7 @@ class FacilityOptionMapper @Inject constructor() : BaseMapper<FacilityRemoteData
             val facilityOptions = mutableListOf<FacilityOption>()
             val facilities = mutableListOf<Facility>()
 
-            it.facilitiesList.forEach { facilityRemote ->
+            it.facilitiesList?.forEach { facilityRemote ->
                 facilityRemote.options.forEach { optionRemote ->
                     val option = FacilityOption(
                         id = optionRemote.id,
@@ -29,25 +29,22 @@ class FacilityOptionMapper @Inject constructor() : BaseMapper<FacilityRemoteData
             }
 
             val exclusionItemList = mutableListOf<ExclusionItem>()
-            val exclusionGroupList = mutableListOf<ExclusionGroup>()
+            val exclusionList = mutableListOf<List<ExclusionItem>>()
 
-            it.exclusionList.forEach { exclusionListRemote ->
-                exclusionListRemote.exclusionGroupListRemote.forEach { exclusionGroupRemote ->
+            it.exclusionList?.forEach { exclusionListRemote ->
+                exclusionListRemote.forEach { exclusionItemRemote ->
 
-                    exclusionGroupRemote.exclusionGroupRemote.forEach {
-                        val exclusionItem =
-                            ExclusionItem(facilityId = it.facilityId, optionId = it.optionId)
-                        exclusionItemList.add(exclusionItem)
-                    }
-
-                    val exclusionGroup = ExclusionGroup(exclusionGroup = exclusionItemList)
-                    exclusionGroupList.add(exclusionGroup)
+                    val exclusionItem = ExclusionItem(
+                        facilityId = exclusionItemRemote.facilityId,
+                        optionId = exclusionItemRemote.optionId
+                    )
+                    exclusionItemList.add(exclusionItem)
                 }
 
-
+                exclusionList.add(exclusionItemList)
             }
 
-            return FacilityData(facilitiesList = facilities, exclusionList = exclusionGroupList)
+            return FacilityData(facilitiesList = facilities, exclusionList = exclusionList)
         }
 
         return FacilityData(facilitiesList = emptyList(), exclusionList = emptyList())
