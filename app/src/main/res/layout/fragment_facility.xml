@@ -11,6 +11,7 @@
         android:id="@+id/rv_facilities"
         android:clipToPadding="false"
         android:paddingBottom="@dimen/full_margin"
+        android:scrollbars="none"
         android:layout_marginStart="@dimen/full_margin"
         android:layout_marginEnd="@dimen/full_margin"/>
 

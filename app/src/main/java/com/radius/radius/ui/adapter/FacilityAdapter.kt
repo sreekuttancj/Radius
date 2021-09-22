@@ -1,9 +1,14 @@
 package com.radius.radius.ui.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.*
 import com.radius.domain.model.business.Facility
+import com.radius.domain.model.business.FacilityOption
 import com.radius.radius.R
 import com.radius.radius.databinding.LayoutFacilityBinding
 import com.radius.radius.util.EqualSpacingItemDecoration
@@ -23,28 +28,37 @@ class FacilityAdapter: ListAdapter<Facility, FacilityAdapter.FacilityViewHolder>
 
         }
     }
+
+    private val onClickOptionMediatorLiveData = MediatorLiveData<FacilityOption>()
+    val onClickOptionLiveData: LiveData<FacilityOption> = onClickOptionMediatorLiveData
+
     inner class FacilityViewHolder (private val binding: LayoutFacilityBinding): RecyclerView.ViewHolder (binding.root), FacilityBinder<Facility> {
        private val optionAdapter = OptionAdapter()
 
+        init {
+            onClickOptionMediatorLiveData.addSource(optionAdapter.onClickOptionLiveData, Observer {
+                Log.i("click_event", "facility_adapter item: ${it.name} isSelected: ${it.isSelected} isExcluded: ${it.isExcluded}")
+
+                onClickOptionMediatorLiveData.value = it
+            })
+        }
         override fun onBind(data: Facility) {
             binding.tvTitle.text = data.name
 
             with(binding.rvOptions){
                 layoutManager = GridLayoutManager(context, 3, GridLayoutManager.VERTICAL, false)
-                addItemDecoration(
-                    EqualSpacingItemDecoration(spacing = resources.getDimensionPixelOffset(
-                        R.dimen.full_margin), shouldIngoreFirstTopMargin = true)
-                )
                 itemAnimator = null
                 adapter = optionAdapter
             }
 
             optionAdapter.submitList(data.options)
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FacilityViewHolder {
         val binding = LayoutFacilityBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
         return FacilityViewHolder(binding)
     }
 

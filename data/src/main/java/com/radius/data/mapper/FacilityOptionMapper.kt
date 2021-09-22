@@ -17,6 +17,7 @@ class FacilityOptionMapper @Inject constructor() : BaseMapper<FacilityRemoteData
 
                     val option = FacilityOption(
                         id = optionRemote.id,
+                        facilityId = facilityRemote.id,
                         name = optionRemote.name,
                         icon = if (optionRemote.icon == "no-room") "no_room" else optionRemote.icon
                     )

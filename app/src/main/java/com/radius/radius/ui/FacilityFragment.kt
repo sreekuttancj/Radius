@@ -1,6 +1,7 @@
 package com.radius.radius.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -38,6 +39,7 @@ class FacilityFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initObserver()
+        initAdapterObserver()
 
         with(binding.rvFacilities){
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -50,7 +52,19 @@ class FacilityFragment : Fragment() {
     private fun initObserver(){
         facilityViewModel.facilityLiveData.observe(viewLifecycleOwner,{
             it?.let {
+                Log.i("frag_facility","Data: $it")
                 facilityAdapter.submitList(it.facilitiesList)
+            }
+        })
+
+    }
+
+    private fun initAdapterObserver (){
+        facilityAdapter.onClickOptionLiveData.observe(viewLifecycleOwner, {
+            it?.let {
+                Log.i("click_event", "facility_frag item: ${it.name} isSelected: ${it.isSelected} isExcluded: ${it.isExcluded}")
+
+                facilityViewModel.updateUserSelectedOption(it)
             }
         })
     }
