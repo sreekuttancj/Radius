@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.FacilityFragment">
+    tools:context=".ui.FacilityFragment"
+    android:background="@color/black">
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
@@ -12,6 +13,7 @@
         android:clipToPadding="false"
         android:paddingBottom="@dimen/full_margin"
         android:scrollbars="none"
+        android:overScrollMode ="never"
         android:layout_marginStart="@dimen/full_margin"
         android:layout_marginEnd="@dimen/full_margin"/>
 

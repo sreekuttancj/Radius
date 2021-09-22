@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.radius.data.viewmodel.FacilityViewModel
@@ -57,6 +58,11 @@ class FacilityFragment : Fragment() {
             }
         })
 
+        facilityViewModel.invalidCombinationLiveData.observe(viewLifecycleOwner, {
+            it?.let {
+                Toast.makeText(requireContext(), getString(R.string.not_available), Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun initAdapterObserver (){

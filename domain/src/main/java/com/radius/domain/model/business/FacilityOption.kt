@@ -11,5 +11,7 @@ data class FacilityOption (
 
     val isSelected: Boolean = false,
 
-    val isExcluded: Boolean = false
+    val isExcluded: Boolean = false,
+
+    var exclusionGroup: List<ExclusionItem> ?= emptyList()
     )
