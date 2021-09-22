@@ -4,17 +4,19 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.radius.data.BaseViewModel
 import com.radius.domain.interactor.GetFacilityInteractor
 import com.radius.domain.model.business.Facility
 import com.radius.domain.model.business.FacilityData
 import com.radius.domain.model.business.FacilityOption
+import com.radius.domain.util.BaseProgress
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class FacilityViewModel @Inject constructor(
     private val getFacilityInteractor: GetFacilityInteractor
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val facilityMutableLiveData = MutableLiveData<FacilityData>()
     val facilityLiveData: LiveData<FacilityData> = facilityMutableLiveData
@@ -24,8 +26,10 @@ class FacilityViewModel @Inject constructor(
         getFacilityInteractor.execute(
             param = Unit,
             onProgress = { progress, _ ->
+                _showActivityProgress.value = BaseProgress(inProgress = progress)
             },
             onError = { error, _ ->
+                _showError.value = error
             }) {
             facilityMutableLiveData.value = it
         }

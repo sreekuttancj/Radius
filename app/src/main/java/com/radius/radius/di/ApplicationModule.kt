@@ -1,13 +1,17 @@
 package com.radius.radius.di
 
+import android.content.Context
 import com.itkacher.okhttpprofiler.OkHttpProfilerInterceptor
 import com.radius.domain.Constant
 import com.radius.domain.util.AppExecutionThread
 import com.radius.domain.util.ExecutionThread
+import com.radius.domain.util.NetworkConnection
 import com.radius.radius.BuildConfig
+import com.radius.radius.util.ConnectionUtil
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -105,4 +109,9 @@ class ApplicationModule {
     @Singleton
     fun provideExecutorThreadService(imp: AppExecutionThread): ExecutionThread = imp
 
+    @Provides
+    @Singleton
+    fun providesNetworkConnection(@ApplicationContext context: Context): NetworkConnection {
+        return ConnectionUtil (context)
+    }
 }

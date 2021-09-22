@@ -17,4 +17,8 @@
         android:layout_marginStart="@dimen/full_margin"
         android:layout_marginEnd="@dimen/full_margin"/>
 
+    <include
+        android:id="@+id/fl_progress"
+        layout="@layout/layout_progress"/>
+
 </FrameLayout>

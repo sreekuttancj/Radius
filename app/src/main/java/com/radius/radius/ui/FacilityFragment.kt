@@ -7,9 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.radius.data.viewmodel.FacilityViewModel
+import com.radius.domain.util.NetworkConnectionError
+import com.radius.domain.util.NetworkResponseError
 import com.radius.radius.R
 import com.radius.radius.databinding.FragmentFacilityBinding
 import com.radius.radius.ui.adapter.FacilityAdapter
@@ -63,13 +66,31 @@ class FacilityFragment : Fragment() {
                 Toast.makeText(requireContext(), getString(R.string.not_available), Toast.LENGTH_SHORT).show()
             }
         })
+
+        facilityViewModel.showProgress.observe(viewLifecycleOwner,{
+            it?.let {
+                binding.flProgress.flProgress.isVisible = it.inProgress
+            }
+        })
+
+        facilityViewModel.showError.observe(viewLifecycleOwner,{
+            it?.let {
+                when (it) {
+                    is NetworkConnectionError -> {
+                       Toast.makeText(requireContext(), getString(R.string.network_error), Toast.LENGTH_SHORT).show()
+                    }
+                    is NetworkResponseError -> {
+                        Toast.makeText(requireContext(), getString(R.string.server_error), Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        })
+
     }
 
     private fun initAdapterObserver (){
         facilityAdapter.onClickOptionLiveData.observe(viewLifecycleOwner, {
             it?.let {
-                Log.i("click_event", "facility_frag item: ${it.name} isSelected: ${it.isSelected} isExcluded: ${it.isExcluded}")
-
                 facilityViewModel.updateUserSelectedOption(it)
             }
         })
