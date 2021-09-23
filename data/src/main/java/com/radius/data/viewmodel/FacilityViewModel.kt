@@ -3,7 +3,6 @@ package com.radius.data.viewmodel
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.radius.data.BaseViewModel
 import com.radius.domain.interactor.GetFacilityInteractor
 import com.radius.domain.model.business.Facility
@@ -42,7 +41,6 @@ class FacilityViewModel @Inject constructor(
 
     fun updateUserSelectedOption(option: FacilityOption) {
         if (isValidFacilityOptionCombination(option)) {
-            Log.i("check_is_valid_combo","true")
 
             val currentFacilities = facilityMutableLiveData.value?.facilitiesList?.toMutableList()
             var userSelectedFacility: Facility? = null
@@ -78,7 +76,6 @@ class FacilityViewModel @Inject constructor(
                         if (savedOptionIndex!=-1){
                             saveUserSelectedOptions.removeAt(savedOptionIndex)
                         }
-                        Log.i("saveUserSelectedOptions","list_remove: $saveUserSelectedOptions")
 
                     } else {
                         //When user check the option
@@ -90,9 +87,6 @@ class FacilityViewModel @Inject constructor(
                                 options = updatedOptionList?.toList() ?: emptyList()
                             )
                             saveUserSelectedOptions.add(updatedOption)
-                            Log.i("saveUserSelectedOptions", "list_add: $saveUserSelectedOptions")
-                        }else{
-
                         }
                     }
                 } else if (facilityOption.isSelected) {
@@ -109,7 +103,6 @@ class FacilityViewModel @Inject constructor(
                     if (savedOptionIndex!=-1){
                         saveUserSelectedOptions.removeAt(savedOptionIndex)
                     }
-                    Log.i("saveUserSelectedOptions","list_remove: $saveUserSelectedOptions")
                 }
             }
 
@@ -124,7 +117,6 @@ class FacilityViewModel @Inject constructor(
             facilityMutableLiveData.value = updatedCurrentFacilityData
         }else {
             invalidCombinationMutableLiveData.value = Unit
-            Log.i("check_is_valid_combo","false")
         }
     }
 
@@ -132,7 +124,6 @@ class FacilityViewModel @Inject constructor(
         var isValidCombo = true
         option.exclusionGroup?.forEach { exclusionItem ->
             val isExcludedIndex = saveUserSelectedOptions.indexOfFirst { it.facilityId == exclusionItem.facilityId && it.id == exclusionItem.optionId}
-            Log.i("isExcludedIndex", "data: $isExcludedIndex")
             if ( isExcludedIndex==-1){
                 isValidCombo = true
             }else {

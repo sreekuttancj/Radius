@@ -9,10 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.*
 import com.radius.domain.model.business.Facility
 import com.radius.domain.model.business.FacilityOption
-import com.radius.radius.R
 import com.radius.radius.databinding.LayoutFacilityBinding
-import com.radius.radius.util.EqualSpacingItemDecoration
-import com.radius.radius.util.ItemSpaceDividerItemDecoration
 
 class FacilityAdapter: ListAdapter<Facility, FacilityAdapter.FacilityViewHolder>(diffUtil) {
 
@@ -37,8 +34,6 @@ class FacilityAdapter: ListAdapter<Facility, FacilityAdapter.FacilityViewHolder>
 
         init {
             onClickOptionMediatorLiveData.addSource(optionAdapter.onClickOptionLiveData, Observer {
-                Log.i("click_event", "facility_adapter item: ${it.name} isSelected: ${it.isSelected} isExcluded: ${it.isExcluded}")
-
                 onClickOptionMediatorLiveData.value = it
             })
         }

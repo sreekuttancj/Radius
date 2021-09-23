@@ -1,7 +1,9 @@
 package com.radius.radius.di
 
 import android.content.Context
+import androidx.room.Room
 import com.itkacher.okhttpprofiler.OkHttpProfilerInterceptor
+import com.radius.data.database.RadiusDb
 import com.radius.domain.Constant
 import com.radius.domain.util.AppExecutionThread
 import com.radius.domain.util.ExecutionThread
@@ -113,5 +115,12 @@ class ApplicationModule {
     @Singleton
     fun providesNetworkConnection(@ApplicationContext context: Context): NetworkConnection {
         return ConnectionUtil (context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRadiusDb(@ApplicationContext context: Context): RadiusDb {
+        return Room.databaseBuilder(context, RadiusDb::class.java, Constant.RADIUS_DB_NAME)
+          .allowMainThreadQueries().fallbackToDestructiveMigration().build()
     }
 }

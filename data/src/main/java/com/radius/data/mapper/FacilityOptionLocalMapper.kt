@@ -1,20 +1,23 @@
 package com.radius.data.mapper
 
-import com.radius.domain.model.business.*
-import com.radius.domain.model.remote.FacilityRemoteData
+import com.radius.domain.model.business.ExclusionItem
+import com.radius.domain.model.business.Facility
+import com.radius.domain.model.business.FacilityData
+import com.radius.domain.model.business.FacilityOption
+import com.radius.domain.model.database.FacilityEntityData
 import com.radius.domain.util.BaseMapper
 import javax.inject.Inject
 
-class FacilityOptionMapper @Inject constructor() : BaseMapper<FacilityRemoteData, FacilityData> {
-    override fun map(data: FacilityRemoteData?): FacilityData {
+class FacilityOptionLocalMapper @Inject constructor() : BaseMapper<FacilityEntityData, FacilityData> {
+    override fun map(data: FacilityEntityData?): FacilityData? {
         data?.let {
             val facilities = mutableListOf<Facility>()
 
             val exclusionList = mutableListOf<List<ExclusionItem>>()
 
-            it.exclusionList?.forEach { exclusionListRemote ->
+            it.exclusionList.exclusionList?.forEach { exclusionListEntity ->
                 val exclusionItemList = mutableListOf<ExclusionItem>()
-                exclusionListRemote.forEach { exclusionItemRemote ->
+                exclusionListEntity.forEach { exclusionItemRemote ->
 
                     val exclusionItem = ExclusionItem(
                         facilityId = exclusionItemRemote.facilityId,
@@ -26,13 +29,13 @@ class FacilityOptionMapper @Inject constructor() : BaseMapper<FacilityRemoteData
                 exclusionList.add(exclusionItemList)
             }
 
-            it.facilitiesList?.forEach { facilityRemote ->
+            it?.facilitiesList?.forEach { facilityEntity ->
                 val facilityOptions = mutableListOf<FacilityOption>()
 
-                facilityRemote.options.forEach { optionRemote ->
+                facilityEntity.options.forEach { optionRemote ->
                     val option = FacilityOption(
                         id = optionRemote.id,
-                        facilityId = facilityRemote.id,
+                        facilityId = facilityEntity.facilityId,
                         name = optionRemote.name,
                         icon = if (optionRemote.icon == "no-room") "no_room" else optionRemote.icon
                     )
@@ -40,8 +43,8 @@ class FacilityOptionMapper @Inject constructor() : BaseMapper<FacilityRemoteData
                     facilityOptions.add(option)
                 }
                 val facility = Facility(
-                    id = facilityRemote.id,
-                    name = facilityRemote.name,
+                    id = facilityEntity.facilityId,
+                    name = facilityEntity.name,
                     options = facilityOptions
                 )
                 facilities.add(facility)

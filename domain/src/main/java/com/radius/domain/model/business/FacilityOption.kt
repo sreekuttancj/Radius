@@ -1,5 +1,8 @@
 package com.radius.domain.model.business
 
+import androidx.room.Entity
+
+@Entity
 data class FacilityOption (
     val id: String,
 

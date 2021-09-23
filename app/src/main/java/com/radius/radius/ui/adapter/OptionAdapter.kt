@@ -54,7 +54,6 @@ class OptionAdapter: ListAdapter<FacilityOption, OptionAdapter.OptionViewHolder>
 
             binding.root.setOnClickListener {
                 onClickOptionMutableLiveData.value = data
-                Log.i("click_event", "item: ${data.name} isSelected: ${data.isSelected} isExcluded: ${data.isExcluded}")
             }
         }
     }

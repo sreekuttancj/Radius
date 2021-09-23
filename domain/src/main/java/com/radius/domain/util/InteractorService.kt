@@ -1,6 +1,5 @@
 package com.radius.domain.util
 
-import com.radius.domain.util.ExecutionResult
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.observers.DisposableObserver
